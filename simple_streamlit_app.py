@@ -16,6 +16,17 @@ from content_creation_team import ContentCreationTeam
 # Load environment variables
 load_dotenv()
 
+# For Streamlit Cloud deployment, also check secrets
+try:
+    import streamlit as st
+    # Check if running on Streamlit Cloud
+    if hasattr(st, 'secrets') and st.secrets:
+        # Use secrets from Streamlit Cloud
+        os.environ["GOOGLE_API_KEY"] = st.secrets.get("GOOGLE_API_KEY", os.getenv("GOOGLE_API_KEY"))
+        os.environ["SERPER_API_KEY"] = st.secrets.get("SERPER_API_KEY", os.getenv("SERPER_API_KEY"))
+except:
+    pass
+
 # Page configuration
 st.set_page_config(
     page_title="AI Content Creator",
